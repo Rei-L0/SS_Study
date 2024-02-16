@@ -17,6 +17,7 @@ class Main {
             y_pos.add(Integer.parseInt(st.nextToken()));
 
         }
+
         Collections.sort(x_pos);
         Collections.sort(y_pos);
 
