@@ -6,7 +6,6 @@ class Main {
         BufferedReader br =  new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         StringTokenizer st;
-      
         ArrayList<Integer> x_pos = new ArrayList<>();
         ArrayList<Integer> y_pos = new ArrayList<>();
 
@@ -17,7 +16,6 @@ class Main {
             y_pos.add(Integer.parseInt(st.nextToken()));
 
         }
-
         Collections.sort(x_pos);
         Collections.sort(y_pos);
 
