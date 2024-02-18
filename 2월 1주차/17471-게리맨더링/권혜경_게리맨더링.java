@@ -72,7 +72,6 @@ public class 게리맨더링_17471 {
             if (mask==0) map.put(m,sum);
             return;
         }
-       
         //비선택
         dfs(idx+1, m);
         //선택
