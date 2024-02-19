@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+
+// 문제 조건에 맞춰 백트래킹을 시도하며 최대값을 구한다.
 
 public class Main {
 
