@@ -1,9 +1,9 @@
 import java.io.*;
 import java.util.*;
 
-public class B_계란으로계란치기_16987 {
+public class Main {
     static int N, answer = 0;
-    static List<Egg> list = new ArrayList<>();
+    static ArrayList<Egg> list = new ArrayList<>();
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -13,25 +13,36 @@ public class B_계란으로계란치기_16987 {
             list.add(new Egg(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
         }
         
-        dfs(0,0);
+        dfs(0);
         System.out.println(answer);
+
     }
-    static void dfs(int idx, int mask){
-        if(idx == N || mask==Math.pow(N,2)-1 || mask==(mask&1<<idx)) {
-            dfs(idx+1, mask);
+    static void dfs(int idx){
+        if(idx == N){
+            int count = 0;
+            for(int i=0;i<N;i++){
+                if(list.get(i).S<=0) count++;
+            }
+            answer = Math.max(answer, count);
             return;
         }
         Egg now = list.get(idx);
-        boolean check = true;
-        for(int t=0;t<=N;t++){
-            if(t==idx || mask==(mask&1<<idx)) continue;
-            now.S -= list.get(t).W;
+        boolean check = false;
+        if(now.S<=0) {
+            dfs(idx+1);
+            return;
+        }
+        for(int t=0;t<N;t++){
+            if(t==idx) continue;
+            if(list.get(t).S<=0) continue;
+            check = true;
+            now.S-=list.get(t).W;
             list.get(t).S -= now.W;
             dfs(idx+1);
             now.S += list.get(t).W;
             list.get(t).S += now.W;
         }
-        if(check) dfs(idx+1);
+        if(!check) dfs(idx+1);
     }    
     static class Egg{
         int S, W;
