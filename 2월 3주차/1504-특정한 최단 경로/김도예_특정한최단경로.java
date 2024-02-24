@@ -9,7 +9,7 @@ public class Main {
 
 	static int n, e, v1, v2;
 	static ArrayList<Node>[] list;
-	static int[][] weights; // weights[1][v1] : 1에서 v1까지의 최단 경로
+	static int[][] weights;
 	static boolean[] visit;
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,7 +17,7 @@ public class Main {
 		n = Integer.parseInt(st.nextToken());
 		e = Integer.parseInt(st.nextToken());
 		list = new ArrayList[n + 1];
-		weights = new int[n + 1][n + 1];
+		weights = new int[2][n + 1];
 		for(int i = 0; i <= n; i++) {
 			list[i] = new ArrayList<>();
 		}
@@ -33,30 +33,28 @@ public class Main {
 		st = new StringTokenizer(br.readLine());
 		v1 = Integer.parseInt(st.nextToken());
 		v2 = Integer.parseInt(st.nextToken());
+		
 
-    // 시작점으로 사용할 것들만 MAX_VALUE 로 채움
-		for(int i = 0; i < n + 1; i++) {
-			if(i == 1 || i == v1 || i == v2) Arrays.fill(weights[i], Integer.MAX_VALUE);			
+		for(int i = 0; i < 2; i++) {
+			Arrays.fill(weights[i], Integer.MAX_VALUE);			
 		}
-    // 경우의 수
 		// case1: 1 -> v1 -> v2 -> n
 		// case2: 1 -> v2 -> v1 -> n
-    
-		dijk(1);
-		dijk(v1);
-		dijk(v2);
+
+		dijk(v1, 0);
+		dijk(v2, 1);
 		
 		int case1 = 0;
 		int case2 = 0;
 		
-		int[] answer = new int[6]; // 짝수 인덱스는 case1, 나머지는 case2
+		int[] answer = new int[6];
 
-		answer[0] = weights[1][v1];
-		answer[1] = weights[1][v2];
-		answer[2] = weights[v1][v2];
-		answer[3] = weights[v1][v2];
-		answer[4] = weights[v2][n];
-		answer[5] = weights[v1][n];
+		answer[0] = weights[0][1];
+		answer[1] = weights[1][1];
+		answer[2] = weights[0][v2];
+		answer[3] = weights[0][v2];
+		answer[4] = weights[1][n];
+		answer[5] = weights[0][n];
 		
 		for(int i = 0; i < 6; i++) {
 			if(i % 2 == 0) case1 += answer[i];
@@ -73,17 +71,17 @@ public class Main {
 
 		System.out.println(ans);
 	}
-	static void dijk(int start) {
+	static void dijk(int start, int wIdx) {
 		PriorityQueue<Node> pq = new PriorityQueue<>();
 		pq.add(new Node(start, 0));
-		weights[start][start] = 0;
+		weights[wIdx][start] = 0;
 		while(!pq.isEmpty()) {
 			Node node = pq.poll();
 			int nx = node.end;
 			for(Node n : list[node.end]) {
-				if(weights[start][n.end] > weights[start][nx] + n.weight) {
-					weights[start][n.end] = weights[start][nx] + n.weight;
-					pq.add(new Node(n.end, weights[start][n.end]));
+				if(weights[wIdx][n.end] > weights[wIdx][nx] + n.weight) {
+					weights[wIdx][n.end] = weights[wIdx][nx] + n.weight;
+					pq.add(new Node(n.end, weights[wIdx][n.end]));
 				}
 			}
 		}
