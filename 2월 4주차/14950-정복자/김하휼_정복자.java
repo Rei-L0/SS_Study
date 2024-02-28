@@ -2,7 +2,17 @@ package Baekjoon.최소신장트리;
 import java.util.*;
 import java.io.*;
 
-// 프림으로 풀었습니다. 
+/*
+- Checkpoints
+
+1. 정복 횟수에 따라 도로 비용이 증가하는데, 이 경우를 잘 고려해줘야 할 듯 !
+
+2. 크루스칼보다는 프림이 훨 간단한 거 같다.
+
+3. 체감난이도: 중하. 최소신장트리에 관한 알고리즘을 알고만 있으면 어렵지 않게 풀 수 있었던 문제 !
+
+*/
+
 class P14950 {
     static int N,M,T,ans;
     static boolean[] visited;
