@@ -1,6 +1,14 @@
 import java.io.*;
 import java.util.*;
 
+/*
+- Checkpoints
+
+1. 다익스트라까지는 쉽게 알 수 있는데, 최단 경로로 방문한 정점을 어떻게 출력하지? 
+
+2. 체감난이도: 중. 다익스트라 + 최적 경로 출력인데 최단 경로로 방문하는 정점을 저장하고, 출력하는 것만 주의하면 어렵지 않게 풀 수 있었던 문제 !
+*/
+
 public class P9694 {
 	static int N,M,INF;
 	static ArrayList<ArrayList<Node>> graph;
@@ -55,7 +63,6 @@ public class P9694 {
 					sb.append(x).append(" ");
 				}
 			}
-      
 			sb.append("\n");
 		}
 		System.out.println(sb);
