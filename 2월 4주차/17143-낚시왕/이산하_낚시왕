@@ -1,0 +1,87 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+public class B_17143 {
+
+	static int R, C, M, answer = 0;
+	static int[][] board;
+	static int[] dy = { 0, -1, 1, 0, 0 }; // 0 dummy
+	static int[] dx = { 0, 0, 0, 1, -1 }; // 0 dummy
+	static SHARK[] sharkList;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		R = Integer.parseInt(st.nextToken()); // y
+		C = Integer.parseInt(st.nextToken()); // x
+		M = Integer.parseInt(st.nextToken()); // 상어 수
+
+		board = new int[R + 1][C + 1]; // 0열, 0행 dummy
+		sharkList = new SHARK[M + 1]; // 0은 dummy
+
+		for (int i = 0; i < M; i++) {
+			st = new StringTokenizer(br.readLine());
+			int y = Integer.parseInt(st.nextToken());
+			int x = Integer.parseInt(st.nextToken());
+			int s = Integer.parseInt(st.nextToken());
+			int d = Integer.parseInt(st.nextToken());
+			int z = Integer.parseInt(st.nextToken());
+			board[y][x] = i + 1; // 상어 위치 표시 (들어온 순서대로 상어에 numbering !)
+			sharkList[i + 1] = new SHARK(y, x, s, d, z);
+
+		}
+
+		int kingIdx = 0;
+		while (kingIdx <= C) {
+			kingIdx += 1; // 1. 낚시왕 오른쪽으로 한칸 이동.
+			fishing(kingIdx); // 2. 낚시왕이 땅과 가까운 제일 가까운 상어 잡아 먹음.
+			move(); // 3. 상어 이동.
+		}
+
+	}
+
+	static void fishing(int kingIdx) {
+
+		for (int y = 1; y <= R; y++) {
+			if (board[y][kingIdx] != 0) {
+
+				answer += sharkList[board[y][kingIdx]].size;
+				sharkList[board[y][kingIdx]] = null;
+
+				board[y][kingIdx] = 0;
+
+				break;
+			}
+		}
+	}
+
+	static void move() {
+		int sharkListSize = M;
+
+		for (int i = 1; i <= sharkListSize; i++) {
+			if(sharkList[i] == null) continue;
+			SHARK nowShark = sharkList[i];
+
+		}
+	}
+
+	static class SHARK {
+		int y;
+		int x;
+		int speed;
+		int direction;
+		int size;
+
+		SHARK(int y, int x, int speed, int direction, int size) {
+			this.y = y;
+			this.x = x;
+			this.speed = speed;
+			this.direction = direction;
+			this.size = size;
+		}
+
+	}
+}
