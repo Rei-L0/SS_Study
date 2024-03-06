@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 
+// 불의 개수가 하나가 아닐수도 있다.
 public class Main {
 
 	static int r, c, sx, sy, fx, fy, ans;
