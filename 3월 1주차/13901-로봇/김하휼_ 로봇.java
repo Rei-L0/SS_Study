@@ -1,13 +1,16 @@
+package Baekjoon.구현;
+
 import java.io.*;
 import java.util.*;
 
-public class prac { 
-    static int R,C,K,cnt;
+class P13901 { 
+    static int R,C,K,cnt, start_x,start_y;
     static int[][] graph;
     static boolean[][] visited;
     static int[] dx = new int[4];
     static int[] dy = new int[4];
     static StringBuilder sb = new StringBuilder();
+
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
@@ -20,14 +23,16 @@ public class prac {
         visited = new boolean[R][C];
 
         K = Integer.parseInt(br.readLine());
+
         for (int i=0; i<K; i++) {
             st = new StringTokenizer(br.readLine());
             graph[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] = -1;
         }
 
         st = new StringTokenizer(br.readLine());
-        int start_x = Integer.parseInt(st.nextToken());
-        int start_y = Integer.parseInt(st.nextToken());
+        start_x = Integer.parseInt(st.nextToken());
+        start_y = Integer.parseInt(st.nextToken());
+        graph[start_x][start_y] = 1;
 
         st = new StringTokenizer(br.readLine());
 		for (int i=0; i<4; i++) {
@@ -46,53 +51,32 @@ public class prac {
 				dy[i] = 1;
 			}
 		}
-
         cnt = 0;
-        go(start_x,start_y,0);
-        System.out.println(sb);
-
+        go(0);
+        System.out.println(start_x+" "+start_y);
     }
 
-    public static void go(int x, int y, int d) {
-        Queue<Node> q = new ArrayDeque<>();
-        q.offer(new Node(x,y,d));
-        visited[x][y] = true;
+    public static void go(int d) {
+        while (true) {
+            int nx = start_x + dx[d];
+            int ny = start_y + dy[d];
 
-        while (!q.isEmpty()) {
-            Node cur = q.poll();
-            if (cnt == 4) {
-                sb.append(cur.x).append(" ").append(cur.y);
-                return;
-            }
-
-            int nx = cur.x + dx[d];
-            int ny = cur.y + dy[d];
-
-            if (check(nx,ny) && !visited[nx][ny]) {
-                q.offer(new Node(nx,ny,d));
-                graph[nx][ny] = graph[cur.x][cur.y] + 1;
-                visited[nx][ny] = true;
+            if (check(nx,ny)) {
+                graph[nx][ny] = 1;
+                start_x = nx;
+                start_y = ny;
                 cnt = 0;
             }
             else {
-                d = (d+1)%4;
+                d = (d+1) % 4;
                 cnt++;
-                q.offer(new Node(cur.x,cur.y,d));
             }
+            if (cnt == 4) break;
         }
     }
 
     public static boolean check(int x, int y) {
-        if (0 <= x && x < R && 0 <= y && y < C && graph[x][y] != -1) return true;
+        if (0 <= x && x < R && 0 <= y && y < C && graph[x][y] == 0) return true;
         else return false;
-    }
-}
-
-class Node{
-    int x,y,d;
-    public Node(int x, int y, int d) {
-        this.x = x;
-        this.y = y;
-        this.d = d;
     }
 }
