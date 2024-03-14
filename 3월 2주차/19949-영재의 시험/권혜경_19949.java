@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 // 완탐말고 다른 방법이 있는지 알고 고민하다가 시간 허비 1
 // 밑에 주석으로 구현했는데 계속 안나돠서 알고 봤더니 카운트가 2여야 한다는 사실을 알아씀,, 시간낭비 2
