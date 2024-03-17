@@ -2,6 +2,10 @@ import java.io.*;
 import java.util.*;
 
 public class B_횡단보도_24042 {
+    // 기본풀이 다익스트라와 동일
+    // 단 현재 내가 있는 시간을 M으로 나눴을때의 나머지가 내 주기보다 작거나 같으면 그때부터 시작하면 되니까 넘어감
+    // 근데 내가 있는 시간이 이 시간대의 주기를 넘어갔으면 다음 시간대의 주기를 기다려야해서 M을 더해줌
+    
     static int N,M;
     static long answer[];
     static boolean visit[];
@@ -29,10 +33,10 @@ public class B_횡단보도_24042 {
             link.get(A).add(new Node(B, i));
             link.get(B).add(new Node(A, i));
         }
-        dijstra();
+        dijkstra();
         System.out.println(answer[N]);
     }
-    static void dijstra(){
+    static void dijkstra(){
         pqueue.offer(new Node(1, 0));
         while(!pqueue.isEmpty()){
             Node temp = pqueue.poll();
