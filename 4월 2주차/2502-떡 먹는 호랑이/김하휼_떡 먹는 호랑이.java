@@ -1,7 +1,6 @@
+
 import java.io.*;
 import java.util.*;
-
-// 백준에서 틀려서 반례 보려고 정올 돌렸는데 정답 뜨네요..! 뭐가 틀렸을까요 ㅠ
 
 public class Main {
 
@@ -17,16 +16,16 @@ public class Main {
 
 		int[] dp = new int[31];
 
-		outer: for (int i = 1; i <= 30; i++) {
+		outer: for (int i = 1; i <= 50000; i++) {
 			dp[1] = i;
-			for (int j = 1; j <= 30; j++) {
+			for (int j = i; j <= 50000; j++) {
 				dp[2] = j;
 				for (int z = 3; z <= 30; z++) {
 					dp[z] = dp[z - 1] + dp[z - 2];
 					if (z == D) {
-						if (dp[D] != K) {
+						if (dp[z] != K) {
 							break;
-						} else if (dp[D] == K) {
+						} else if (dp[z] == K) {
 							A = i;
 							B = j;
 							break outer;
