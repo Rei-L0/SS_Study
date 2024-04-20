@@ -1,6 +1,11 @@
 import java.io.*;
 import java.util.*;
 
+/*
+구현을 꼭 순서대로 해야하는 거 같았습니다. 
+첨에 조건 4와 5를 순서 바꿔서 조건문 걸어줬는데, 75%에서 계속 틀렸었음 
+*/
+
 class Main {
 	static int R, C, start_x, start_y, jong_x, jong_y;
 	static char[][] graph;
@@ -59,10 +64,10 @@ class Main {
 	}
 
 	static boolean solve(int d) {
-		jong_x = start_x + dx[d];
+		jong_x = start_x + dx[d]; // 조건 1
 		jong_y = start_y + dy[d];
 
-		if (graph[jong_x][jong_y] == 'R') {
+		if (graph[jong_x][jong_y] == 'R') { // 조건 2
 			return false;
 		}
 
@@ -85,7 +90,7 @@ class Main {
 			int tmp_x = 0;
 			int tmp_y = 0;
 			int min_v = Integer.MAX_VALUE;
-			for (int j = 1; j < 10; j++) {
+			for (int j = 1; j < 10; j++) { // 조건 3
 				int nx = arr.get(i).x + dx[j];
 				int ny = arr.get(i).y + dy[j];
 
@@ -105,13 +110,13 @@ class Main {
 		arr.clear();
 
 		for (int i = 0; i < toWhere.size(); i++) {
-			if (graph[toWhere.get(i).x][toWhere.get(i).y] == 'I')
+			if (graph[toWhere.get(i).x][toWhere.get(i).y] == 'I') // 조건 4 수행
 				return false;
 
-			if (countCheck[toWhere.get(i).x][toWhere.get(i).y] > 1) {
+			if (countCheck[toWhere.get(i).x][toWhere.get(i).y] > 1) { // 조건 5 수
 				continue;
 			} else {
-				graph[toWhere.get(i).x][toWhere.get(i).y] = 'R';
+				graph[toWhere.get(i).x][toWhere.get(i).y] = 'R'; // 아두이노 이
 				arr.add(new Node(toWhere.get(i).x, toWhere.get(i).y));
 			}
 		}
