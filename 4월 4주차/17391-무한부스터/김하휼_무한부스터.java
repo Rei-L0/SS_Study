@@ -4,7 +4,7 @@ import java.util.*;
 /*
 오른쪽이랑 밑으로만 갈 수 있는 bfs 
 */
- 
+
 class Main {
 	static int N,M;
 	static int[][] graph;
@@ -51,10 +51,10 @@ class Main {
 						int ny = cur.y + dy[i]*j;
 	
 						if (!check(nx,ny)) continue;
-            if (visited[nx][ny]) continue;
-						
-            visited[nx][ny] = true;
-            q.offer(new Node(nx,ny,cur.cnt+1));
+						if (visited[nx][ny]) continue;
+					
+						visited[nx][ny] = true;
+						q.offer(new Node(nx,ny,cur.cnt+1));
 						
 					}
 				}
