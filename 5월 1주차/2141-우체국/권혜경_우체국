@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
+
+class Main{
+    static int N;
+    static Long min = Long.MAX_VALUE;
+    static Long cost[][];
+    static Node house[];
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        N = Integer.parseInt(br.readLine());
+        cost = new Long[N][4]; // 0. 0에서부터 인원 1. 누적가중치 2. N-1에서부터 인원 3. 누적가중치
+        for(int i = 0; i < N; i++){
+            st = new StringTokenizer(br.readLine());
+            house[i] = new Node(i,Long.parseLong(st.nextToken()),Long.parseLong(st.nextToken()));
+        }
+        Arrays.sort(house, (o1,o2)-> o1.w<o2.w ? -1 : 1);
+
+        cost[0][0] = house[0].h;
+        cost[N-1][2] = house[N-1].h;
+        
+        for(int i=1;i<N-1;i++){
+            cost[i][0] = cost[i-1][0] + house[i].h;
+            cost[i][1] = cost[i-1][1] + cost[i-1][0]*(house[i].w-house[i-1].w);
+            
+            cost[N-1-i][2] = cost[N-i][2] + house[N-1-i].h;
+            cost[N-1-i][3] = cost[N-1-i][1] + cost[N-i][0]*(house[N-i].w-house[N-1-i].w) + (house[N-i].h-house[N-1-i].h)*Math.abs(house[N-i].w-house[N-1-i].w);
+        }
+    
+        for(int i=0;i<N;i++){
+            if(min<)
+        }
+    }
+    static class Node{
+        int i;
+        Long w, h;
+        Node(int idx, Long where, Long how){
+            i=idx;
+            w=where;
+            h=how;
+        }
+    }
+}
