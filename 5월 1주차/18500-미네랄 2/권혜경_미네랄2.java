@@ -1,3 +1,97 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+class Main{
+    static int R, C, N;
+    static boolean link;
+    static int stick[];
+    static char map[][];
+    static int dy[] = {-1,0,0,1};
+    static int dx[] = {0,-1,1,0};
+    static Queue<Node> queue = new ArrayDeque<>();
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        R  = Integer.parseInt(st.nextToken());
+        C  = Integer.parseInt(st.nextToken());
+
+        map = new char[R][];
+
+        for(int i=0;i<R;i++){
+            map[i] = br.readLine().toCharArray();
+        }
+
+        N = Integer.parseInt(br.readLine());
+        stick = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for(int i=0;i<N;i++){
+            stick[i] = Integer.parseInt(st.nextToken())-1;
+        }
+        for(int i=0;i<N;i++){
+            if(i%2==0){
+                for(int j=0;j<C;j++){
+                    if(map[stick[i]][j]=='x'){
+                        up(new Node(stick[i],j));
+                    }
+                }
+            }else{
+                for(int j=C-1;j>=0;j--){
+                    if(map[stick[i]][j]=='x'){
+                        up(new Node(stick[i],j));
+                    }
+                }
+            }
+        }
+
+    }
+    static void up(Node n){
+        boolean visit[][];
+        map[n.y][n.x] = '.';
+        int ny, nx,y,x;
+        for(int i=0; i<3; i++){
+            visit = new boolean[R][C];
+            visit[n.y][n.x] = true;
+            y = n.y+dy[i];
+            x = n.x+dx[i];
+            if(map[y][x]=='.') continue;
+            queue.offer(new Node(y, x));
+            while(queue.isEmpty()){
+                Node nn = queue.poll();
+                y = nn.y;
+                x = nn.x;
+                visit[y][x] = true;
+                for(int j=0;j<4;j++){
+                    ny = y+dy[j];
+                    nx = x+dx[j];
+                    if(ny<0||ny>=R||nx<0||nx>=C||visit[ny][nx]||map[ny][nx]=='.') continue;
+                    queue.offer(new Node(ny, nx));
+                }
+            }
+
+            link = false;
+            for(int j=0;j<C;j++){
+                if(visit[R-1][j]) {
+                    link = true;
+                    break;
+                }
+            }
+            if(link) continue;
+
+        }
+    }
+    static class Node{
+        int y, x;
+        Node(int y, int x){
+            this.y=y;
+            this.x=x;
+        }
+    }
+}
+
 // 이사람 풀이를 참조해서 다시 풀 예정,,
 
 import java.io.*;
