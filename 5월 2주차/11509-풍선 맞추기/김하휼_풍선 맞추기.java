@@ -3,9 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class prac {
+public class Main {
     private static int N,result;
-    private static int[] arr = new int[1_000_001];
+    private static int[] arr = new int[1000001];
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
