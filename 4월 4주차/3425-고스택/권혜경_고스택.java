@@ -1,14 +1,17 @@
+// 나누기, 나머지 연산을 경우에 따라서 계산하려고 하니 틀린거더군요,, 
+// 어이없습니다
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
 class Main{
     static Stack<Long> stack = new Stack<>();
-    static Queue<String> queue = new ArrayDeque<>();
+    static List<String> queue = new ArrayList<>();
     static int N;
     static String input;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,7 +21,7 @@ class Main{
 
         while(true){
             inputorder();
-            if(queue.peek().equals("QUIT")) break;
+            if(queue.get(queue.size()-1).equals("QUIT")) break;
         }
         System.out.println(sb.toString());
     }
@@ -31,7 +34,7 @@ class Main{
                 case "QUIT" :
                     go = false;
                     queue.clear();
-                    queue.offer(input);
+                    queue.add(input);
                     break;
                 case "END" :
                     N = Integer.parseInt(br.readLine());
@@ -47,20 +50,20 @@ class Main{
                     break;
 
                 default:
-                    queue.offer(input);
+                    queue.add(input);
+                    break;
             }
         }
 
 
     }
     static void doit(){
-        int size = queue.size();
         long temp_1, temp_2;
         boolean go = true;
-        for(int i = 0; i < size; i++){
+        for(String input : queue){
+//            System.out.println(input);
             if(!stack.isEmpty() && Math.abs(stack.peek())>1_000_000_000) go = false;
             if(!go) break;
-            input = queue.poll();
             order = new StringTokenizer(input);
             switch(order.nextToken()){
                 case "NUM": stack.push(Long.parseLong(order.nextToken())); break;
@@ -121,24 +124,15 @@ class Main{
                     if(stack.size()>=2) {
                         temp_1 = stack.pop();
                         temp_2 = stack.pop();
-                        if (temp_1 != 0) {
-                            if (temp_1 > 0 && temp_2 > 0)
-                                stack.push(temp_2 % temp_1);
-                            else if (temp_1 > 0 && temp_2 < 0)
-                                stack.push(temp_2 + Math.abs(temp_2) / Math.abs(temp_1) * Math.abs(temp_1));
-                            else if (temp_1 < 0 && temp_2 > 0)
-                                stack.push(temp_2 - Math.abs(temp_2) / Math.abs(temp_1) * (Math.abs(temp_1)) + temp_1);
-                            else if (temp_1 < 0 && temp_2 < 0)
-                                stack.push(temp_2 + Math.abs(temp_2) / Math.abs(temp_1) * (Math.abs(temp_1)));
-                        }
+                        if (temp_1 != 0)  stack.push(temp_2%temp_1);
                         else go = false;
                     } else go = false;
                     break;
             }
-            queue.offer(input);
+
         }
-        if(!stack.isEmpty() && Math.abs(stack.peek())>1_000_000_000) go = false;
-        if(!go || stack.size()!=1) sb.append("ERROR\n");
+        if(stack.size()!=1 || Math.abs(stack.peek())>1_000_000_000) go = false;
+        if(!go) sb.append("ERROR\n");
         else sb.append(stack.pop()).append("\n");
     }
 }
